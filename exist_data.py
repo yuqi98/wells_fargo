@@ -35,27 +35,22 @@ styles = {
               'marginLeft': 'auto', 'marginRight': 'auto', "width": "95%",
               'boxShadow': '0px 0px 2px 2px rgba(204,204,204,0.4)',
               },
-    'prof-pic': {'boxShadow': '0px 0px 2px 2px rgba(204,204,204,0.4)',
-                 'marginLeft': '20%'}
 }
 
 app.layout = html.Div([
     html.H1('User Carbon FootPrint Statistics', style=styles['title']),
-    html.Div([
-        html.Img(src=encode_image('user.png'),
-                style=styles['prof-pic']),
-        html.Div([html.P('Name: User1'), html.P('Location: Durham, North Carolina'), html.P('Area of most impact')],
-                style={'padding': '2%', 'textAlign': 'center'}),
-        dcc.Input(id='input-box', value='1', type='text', style={'margin': '0px 0px 0px 5%'})
-        ], style={'columnCount': 3}
+    html.Div(id='user-det', children=[
+        html.Img(id='pic', src=encode_image('user.png')),
+        dcc.Input(id='input-box', value='1', type='text', style={'margin': '0px 0px 0px 5%'}),
+        dcc.Graph(id='most_contrib')
+    ]    , style={'columnCount': 3}
     ),
 
     #plotted graphs
     html.Div(id='inter', children=[
-        dcc.Graph(id='most_contrib'),
         dcc.Graph(id='pers_det'),
         dcc.Graph(id='performance')
-    ], style={'columnCount': 3}),
+    ], style={'columnCount': 2}),
 
     dcc.Graph(id='agg_det'),
 
@@ -64,13 +59,20 @@ app.layout = html.Div([
 
 ], style=styles['main'])
 
+# @app.callback(
+#     Output(component_id='user-name', component_property='children'),
+#     [Input(component_id='input-box', component_property='value')]
+# )
+# def user_name(user_num):
+#     return 'Name: User#{}'.format(user_num)
+
 @app.callback(
     Output(component_id='most_contrib', component_property='figure'),
     [Input(component_id='input-box', component_property='value')]
 )
 def contribution_area(user_id):
     base_chart = {
-        "values": [40, 10, 10, 10, 10, 10, 10],
+        "values": [80, 20, 20, 20, 20, 20, 20],
         "labels": ["-", "0", "20", "40", "60", "80", "100"],
         "domain": {"x": [0, .48]},
         "marker": {
@@ -98,9 +100,8 @@ def contribution_area(user_id):
         "textposition": "outside"
     }
 
-
     meter_chart  = {
-        "values": [50, 12.5,12.5,12.5,12.5],
+        "values": [60, 15,15,15,15],
         "labels": ["Green Rating", "A","B","C","D"],
         "marker": {
             'colors': [
