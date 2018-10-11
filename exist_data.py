@@ -14,9 +14,15 @@ import base64
 #css dependency
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-#read in csv
+#read user_data
 data = pd.read_csv('first_preprocess.csv', index_col='user_num')
 
+#read products_data
+products = pd.read_csv('products.csv', index_col='group')
+products = products.iloc[:, ~products.columns.str.contains('^Unnamed')]
+
+#read tips_data
+#tips = pd.read_csv('tips.csv')
 
 #image read in
 def encode_image(image_file):
@@ -41,6 +47,7 @@ app.layout = html.Div([
     html.H1('User Carbon FootPrint Statistics', style=styles['title']),
     html.Div(id='user-det', children=[
         html.Img(id='pic', style={'height': '150px', 'width': '150px'}),
+        html.Div(id='user'),
         dcc.Input(id='input-box', value='1', type='text', style={'margin': '0px 0px 0px 5%', 'borderRadius': '5px'})
     ], style={'marginLeft': '40px'}
     ),
@@ -58,12 +65,12 @@ app.layout = html.Div([
 
 ], style=styles['main'])
 
-# @app.callback(
-#     Output(component_id='user-name', component_property='children'),
-#     [Input(component_id='input-box', component_property='value')]
-# )
-# def user_name(user_num):
-#     return 'Name: User#{}'.format(user_num)
+@app.callback(
+    Output(component_id='user', component_property='children'),
+    [Input(component_id='input-box', component_property='value')]
+)
+def user_name(user_num):
+    return 'Name: User#{}'.format(user_num)
 
 @app.callback(
     Output(component_id='pic', component_property='src'),
@@ -178,6 +185,9 @@ def performance_visual(user_id):
         'data': [scatter1, scatter2],
         'layout': layout
     }
+
+def recommend(user_val):
+    pass
 
 if __name__ == '__main__':
     app.run_server(debug=True)
