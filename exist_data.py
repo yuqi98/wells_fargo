@@ -40,10 +40,9 @@ styles = {
 app.layout = html.Div([
     html.H1('User Carbon FootPrint Statistics', style=styles['title']),
     html.Div(id='user-det', children=[
-        html.Img(id='pic', src=encode_image('user.png')),
-        dcc.Input(id='input-box', value='1', type='text', style={'margin': '0px 0px 0px 5%'}),
-        dcc.Graph(id='most_contrib')
-    ]    , style={'columnCount': 3}
+        html.Img(id='pic', style={'height': '150px', 'width': '150px'}),
+        dcc.Input(id='input-box', value='1', type='text', style={'margin': '0px 0px 0px 5%', 'borderRadius': '5px'})
+    ], style={'marginLeft': '40px'}
     ),
 
     #plotted graphs
@@ -67,102 +66,11 @@ app.layout = html.Div([
 #     return 'Name: User#{}'.format(user_num)
 
 @app.callback(
-    Output(component_id='most_contrib', component_property='figure'),
+    Output(component_id='pic', component_property='src'),
     [Input(component_id='input-box', component_property='value')]
 )
-def contribution_area(user_id):
-    base_chart = {
-        "values": [80, 20, 20, 20, 20, 20, 20],
-        "labels": ["-", "0", "20", "40", "60", "80", "100"],
-        "domain": {"x": [0, .48]},
-        "marker": {
-            "colors": [
-                'rgb(255, 255, 255)',
-                'rgb(255, 255, 255)',
-                'rgb(255, 255, 255)',
-                'rgb(255, 255, 255)',
-                'rgb(255, 255, 255)',
-                'rgb(255, 255, 255)',
-                'rgb(255, 255, 255)'
-            ],
-            "line": {
-                "width": 2
-            }
-        },
-        "name": "Gauge",
-        "hole": .6,
-        "type": "pie",
-        "direction": "clockwise",
-        "rotation": 108,
-        "showlegend": False,
-        "hoverinfo": "none",
-        "textinfo": "label",
-        "textposition": "outside"
-    }
-
-    meter_chart  = {
-        "values": [60, 15,15,15,15],
-        "labels": ["Green Rating", "A","B","C","D"],
-        "marker": {
-            'colors': [
-                'rgb(255, 255, 255)',
-                '#9ACD32',
-                'yellow',
-                'rgb(226,126,64)',
-                '#CD3333'
-            ]
-        },
-        "domain": {"x": [0, 0.48]},
-        "name": "Gauge",
-        "hole": .5,
-        "type": "pie",
-        "direction": "clockwise",
-        "rotation": 90,
-        "showlegend": False,
-        "textinfo": "label",
-        "textposition": "inside",
-        "hoverinfo": "none"
-    }
-
-    layout = {
-        'xaxis': {
-            'showticklabels': False,
-            'showgrid': False,
-            'zeroline': False,
-        },
-        'yaxis': {
-            'showticklabels': False,
-            'showgrid': False,
-            'zeroline': False,
-        },
-        'shapes': [
-            {
-                'type': 'path',
-                'path': 'M 0.235 0.5 L 0.24 0.65 L 0.245 0.5 Z',
-                'fillcolor': 'rgba(44, 160, 101, 0.5)',
-                'line': {
-                    'width': 0.5
-                },
-                'xref': 'paper',
-                'yref': 'paper'
-            }
-        ],
-        'annotations': [
-            {
-                'xref': 'paper',
-                'yref': 'paper',
-                'x': 0.23,
-                'y': 0.45,
-                'text': '50',
-                'showarrow': False
-            }
-        ]
-    }
-    base_chart['marker']['line']['width'] = 0
-    return {
-        'data': [base_chart, meter_chart],
-        'layout': layout
-    }
+def display_image(user_id):
+    return encode_image('diverseui-10-06/image-{}.png'.format(user_id))
 
 @app.callback(
     Output(component_id='pers_det', component_property='figure'),
