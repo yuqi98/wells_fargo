@@ -46,10 +46,11 @@ styles = {
 app.layout = html.Div([
     html.H1('User Carbon FootPrint Statistics', style=styles['title']),
     html.Div(id='user-det', children=[
-        html.Img(id='pic', style={'height': '150px', 'width': '150px'}),
-        html.Div(id='user'),
-        dcc.Input(id='input-box', value='1', type='text', style={'margin': '0px 0px 0px 5%', 'borderRadius': '5px'})
-    ], style={'marginLeft': '40px'}
+        html.Img(id='pic', style={'height': '150px', 'width': '150px', 'borderRadius': '5%', 'marginRight': '-50%'}),
+        html.Div(id='user', style={'height': '150px', 'width': '150px'}),
+        dcc.Input(id='input-box', value='1', type='text', style={'borderRadius': '5px'}),
+        html.Div(id='tips', style={'height': '100px', 'width': '300px', 'boxShadow': '1px 1px 1px 1px Gray', 'borderRadius': '5px'})
+    ], style={'marginLeft': '5%', 'columnCount': 3}
     ),
 
     #plotted graphs
@@ -61,8 +62,10 @@ app.layout = html.Div([
     dcc.Graph(id='agg_det'),
 
     #recommendations
-    html.H6('Recommendations', style={'color': 'SteelBlue', 'marginLeft': '2%'})
-
+    html.H6('Recommendations', style={'color': 'SteelBlue', 'marginLeft': '2%'}),
+    html.Div(id='recom', children=[
+        dcc.Checklist(id='opts')
+    ])
 ], style=styles['main'])
 
 @app.callback(
@@ -70,14 +73,18 @@ app.layout = html.Div([
     [Input(component_id='input-box', component_property='value')]
 )
 def user_name(user_num):
-    return 'Name: User#{}'.format(user_num)
+    perfom_dict = {1: 'A', 2: 'B', 3: 'C', 4: 'D'}
+    details = "Name: User#{}\nLocation: Wells Fargo\nCategory:\n{}".format(user_num, perfom_dict[2])
+    return details
 
 @app.callback(
     Output(component_id='pic', component_property='src'),
     [Input(component_id='input-box', component_property='value')]
 )
 def display_image(user_id):
-    return encode_image('diverseui-10-06/image-{}.png'.format(user_id))
+    range_num = int(user_id) % 57
+    print(range_num)
+    return encode_image('diverseui-10-06/image-{}.png'.format(str(range_num)))
 
 @app.callback(
     Output(component_id='pers_det', component_property='figure'),
@@ -136,11 +143,9 @@ def aggregate_visual(user_id):
         ),
         name='Where you stand'
     )
-
     return {
         'data': [trace,trace2],
         'layout': go.Layout(
-            title='Rank on Aggregate Scale',
             hovermode='closest'
         )
     }
@@ -165,13 +170,13 @@ def performance_visual(user_id):
         r = user,
         theta = ['Heating','Bath','Kitchen', 'TV', 'Transportation', 'Waste'],
         fill = 'toself',
-        name = 'Group A'
+        name = 'Current'
     )
     scatter2 = go.Scatterpolar(
         r = mean,
         theta = ['Heating','Bath','Kitchen', 'TV', 'Transportation', 'Waste'],
         fill = 'toself',
-        name = 'Group B'
+        name = 'Change'
     )
     layout = go.Layout(
         polar = dict(
@@ -186,7 +191,25 @@ def performance_visual(user_id):
         'layout': layout
     }
 
-def recommend(user_val):
+# @app.callback(
+#     Output(component_id='opts', component_property='options'),
+#     [Input(component_id='input-box', component_property='value')]
+# )
+# def recommend(user_val):
+#     options = []
+#     vals = [1, 4]
+#     #for i in vals:
+#     row = products[1]
+#     d = {'p1': row[0],
+#          'p2': row[1],
+#          'pr1': row[2],
+#          'pr2': row[3],
+#          'l1': row[4],
+#          'l2': row[5]}
+#     #options.append(d)
+#     return d
+
+def tip_show(user_val):
     pass
 
 if __name__ == '__main__':
