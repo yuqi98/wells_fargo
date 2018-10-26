@@ -1,0 +1,28 @@
+,Activity,Per,solar powered  water heater,gas water heater,electric water heater - peak hours,electric water heater - off peak hours,gas,natural gas,hybrid,electric - peak hours,electric - off peak hours,Jet Fuel,waste management
+1,Household heating => 70F,hour ,,,,,,0.000436,,0.00065,0.000542,,
+2,Household heating < 70F,hour ,,,,,,0.000872,,0.000923,0.000901,,
+3,Use of heat pump (negative CF),hour ,,,,,,0.001074,,0.001229,0.001188,,
+4,Use of air conditioner ,hour ,,,,,,0.000598,,0.00798,0.000721,,
+5,shower - short,activity,0.000012,0.000102,0.000232,0.000199,,,,,,,
+6,shower - long (> 3 min),activity,0.000017,0.000149,0.000354,0.000312,,,,,,,
+7,bath,activity,0.000088,0.000254,0.000412,0.000368,,,,,,,
+8,wash-up,activity,0.000004,0.000042,0.000067,0.000055,,,,,,,
+9,use of dishwasher,activity,0.000025,0.000165,0.000398,0.000311,,,,0.000084,0.000078,,
+10,use of clothes washer,activity,0.000033,0.000199,0.000433,0.000382,,0.000154,,0.000102,0.000093,,
+11,use of clothes dryer ,activity,,,,,,0.000187,,0.000132,0.000122,,
+12,use of cooking range,activity,,,,,,0.000201,,0.000142,0.000135,,
+13,use of  oven,activity,,,,,,0.000255,,0.000162,0.00015,,
+14,use of self-clean feature of electric oven,activity,,,,,,,,0.000199,0.000178,,
+15,Small kitchen applicance in the home,activity,,,,,,,,0.000054,0.000041,,
+16,TV/computer use,hour ,,,,,,,,0.000002,0.000002,,
+17,air travel - large plane,100 miles,,,,,,,,,,0.0179,
+18,air travel - small  plane (<50 seats) ,100 miles,,,,,,,,,,0.0408,
+19,car trips- self only,mile  ,,,,,0.000551,,0.000332,0.000192,0.000233,,
+20,car trips - driver and self,mile  ,,,,,0.000554,,0.000337,0.000199,0.000245,,
+21,car trips - 2+ people with mulitple end points,mile  ,,,,,0.000354,,0.000123,0.000032,0.000055,,
+22,trips using public ground transportation,mile  ,,,,,0.000276,,,,,,
+23,bags of garbage disposed,per bag,,,,,,,,,,,0.0419
+24,bags of recylce disposited (negative CF),per bag,,,,,,,,,,,-0.0419
+25,bags of compost deposited (negative CF),per bag,,,,,,,,,,,-0.0419
+26,hazardous or electic items disposed,per item,,,,,,,,,,,0.0211
+27,large items disposed,per item,,,,,,,,,,,0.0211
